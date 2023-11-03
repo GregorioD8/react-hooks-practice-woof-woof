@@ -15,7 +15,7 @@ function App() {
     fetch(API)
       .then((res) => res.json())
       .then((data) => setDogs(data))
-  }, [dogs])
+  }, [])
 
 
   function onUpdateDog(doggo) {
@@ -25,12 +25,17 @@ function App() {
     setSelectedDog(doggo)
   }
   function handleToggleFilter() {
-    setGoodDogFilterOn(!(goodDogFilterOn))
+    setGoodDogFilterOn(!goodDogFilterOn)
   }
-  let visibleDogs = dogs
-  if (goodDogFilterOn) {
-    visibleDogs = visibleDogs.filter((d) => d.isGoodDog)
+  
+  
+  function handleSelect(doggo) {
+    setSelectedDog(doggo)
   }
+  
+  const visibleDogs = dogs.filter((d) => goodDogFilterOn? d.isGoodDog: d)
+  
+
 
   return (
     <div className="App">
@@ -42,7 +47,7 @@ function App() {
 
       <DogBar
         dogs={visibleDogs}
-        onSelectDog={setSelectedDog}
+        onSelectDog={handleSelect}
       />
 
       <DogSummary
